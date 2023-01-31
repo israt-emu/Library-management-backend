@@ -1,6 +1,8 @@
 const Book = require("../models/Books");
+const mongoose = require('mongoose');
+const  {ObjectId} = mongoose.Types
 
-// add new book 
+// add new book
 exports.addBookServices = async (data) => {
   const book = await Book.create(data);
   await book.save({ validateBeforeSave: true });
@@ -8,21 +10,26 @@ exports.addBookServices = async (data) => {
 };
 
 // // find single bookmark
-// exports.findBookmarkById = async (id) => {
-//   const bookmark = await Bookmark.findOne({ id });
+exports.findSingleBookServices = async (id) => {
 
-//   return bookmark;
-// };
+  const book = await Book.findOne({ bookId:id });
+console.log(book);
+  return book;
+};
 
-// // delete bookmark
-// exports.deleteBookmark = async (id) => {
-//   const bookmark = await Bookmark.deleteOne({ id });
+// delete book
+exports.deleteBookServices = async (id) => {
+ try {
+  const book = await Book.deleteOne({ bookId:id });
+  return book;
+ } catch (error) {
+  console.log(error.message);
+ }
+  
+};
 
-//   return bookmark;
-// };
-
-// // get all bookmark
-exports.getAllBooks = async () => {
+// // get all book
+exports.getAllBooksServices = async () => {
   const books = await Book.find({});
   return books;
 };

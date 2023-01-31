@@ -8,6 +8,7 @@ const bookSchema = mongoose.Schema(
     bookId: {
       type: Number,
       required: true,
+      unique:true
     },
     category: {
       type: String,
