@@ -3,7 +3,15 @@ const { addBookServices } = require("../../services/bookServices");
 exports.addBookController = async (req, res) => {
     try {
       const data = req?.body;
-    
+    const {bookId}=req?.body;
+    // get unique id 
+    const  existingBook = await findSingleBookServices(bookId)
+    if(existingBook?.bookId){
+      return res.status(200).json({
+        status: "failed",
+        message: "bookId already available",
+      });
+    }
       const book = await addBookServices(data);
       console.log("book---->", req.body);
       if (book) {
