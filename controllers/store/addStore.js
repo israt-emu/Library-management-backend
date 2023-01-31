@@ -1,14 +1,11 @@
 const {addStore, saveStore} = require("../../services/storeServices");
 const fetch = require("node-fetch");
-const {takeScreenShot} = require("../../utils/takeScreenshot");
-const {grabFavicon} = require("../../utils/grabFavicon");
 exports.addStore = async (req, res) => {
   try {
     const {title, group, url, pageLocation, favicon, thumbnail} = req?.body;
     if (url && title) {
       //getting html content
       const response = await fetch(`${url}`);
-      const htmlContent = await response.text();
       const data = {
         title,
         group,
@@ -16,7 +13,7 @@ exports.addStore = async (req, res) => {
         pageLocation,
         favicon,
         thumbnail,
-        htmlContent,
+    
       };
       const store = await addStore(data);
       if (store) {

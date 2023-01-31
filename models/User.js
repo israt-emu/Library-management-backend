@@ -44,7 +44,7 @@ const userSchema = mongoose.Schema(
       type: String,
     },
     educationalQualification: {
-      type: string,
+      type: String,
     },
     contactNumber: {
       type: String,
