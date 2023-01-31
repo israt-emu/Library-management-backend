@@ -25,10 +25,27 @@ const userSchema = mongoose.Schema(
 
     role: {
       type: String,
-      enum: ["admin"],
-      default: "admin",
+      enum: ["admin", "student", "teacher", "stuff"],
+      // default: "admin",
     },
-
+    studentId: {
+      type: String,
+    },
+    session: {
+      type: String,
+    },
+    year: {
+      type: Number,
+    },
+    term: {
+      type: Number,
+    },
+    designation: {
+      type: String,
+    },
+    educationalQualification: {
+      type: string,
+    },
     contactNumber: {
       type: String,
       validate: [validator.isMobilePhone, "Please provide a valid contact number"],

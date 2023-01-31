@@ -10,15 +10,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/TheMarkSync/MarkSync-backend.git"
+    "url": "git+https://github.com/israt-emu/Library-management-backend.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/TheMarkSync/MarkSync-backend/issues"
+    "url": "https://github.com/israt-emu/Library-management-backend/issues"
   },
-  "homepage": "https://github.com/TheMarkSync/MarkSync-backend#readme",
+  "homepage": "https://github.com/israt-emu/Library-management-backend#readme",
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
