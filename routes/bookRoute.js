@@ -8,6 +8,6 @@ const router = express.Router();
 router.post("/addBook", addBookController);
 router.get("/getAllBooks", getAllBookController);
 router.delete("/deleteBook/:id", deleteBookController);
-router.get("/getSingleBook/:id", getSingleBookController);
+router.get("/getSingleBook", getSingleBookController);
 
 module.exports = router;
