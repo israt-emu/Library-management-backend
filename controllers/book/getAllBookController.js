@@ -1,10 +1,9 @@
-const { getAllBooksServices } = require("../../services/bookServices");
+const {getAllBooksServices} = require("../../services/bookServices");
 
 exports.getAllBookController = async (req, res) => {
   try {
-
     const books = await getAllBooksServices();
-    if (books) {
+    if (books?.length > 0) {
       res.status(200).json({
         status: "success",
         books: books,
@@ -13,6 +12,7 @@ exports.getAllBookController = async (req, res) => {
       res.status(400).json({
         status: "failed",
         message: "Unable to get books",
+        books,
       });
     }
   } catch (error) {

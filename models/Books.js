@@ -8,7 +8,7 @@ const bookSchema = mongoose.Schema(
     bookId: {
       type: Number,
       required: true,
-      unique:true
+      unique: true,
     },
     category: {
       type: String,
@@ -24,10 +24,10 @@ const bookSchema = mongoose.Schema(
       type: Number,
       required: true,
     },
-    remainingStock: {
-      type: Number,
-      required: true,
-    },
+    // remainingStock: {
+    //   type: Number,
+    //   required: true,
+    // },
     bookLocation: {
       type: String,
       required: true,
@@ -47,7 +47,7 @@ const bookSchema = mongoose.Schema(
     status: {
       type: String,
     },
-    borrowedBy: [],
+    // borrowedBy: [],
     addedBy: {
       type: String,
     },
