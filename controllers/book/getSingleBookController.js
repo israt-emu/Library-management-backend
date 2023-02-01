@@ -2,9 +2,10 @@ const { findSingleBookServices } = require("../../services/bookServices");
 
 exports.getSingleBookController = async (req, res) => {
     try {
-        const {bookId}=req?.body
-        console.log("----req---",req.body);
-      const book = await findSingleBookServices(bookId);
+        const {id:strId}=req?.params
+        const id=Number(strId)
+        console.log("----req---",req.params,id);
+      const book = await findSingleBookServices(id);
       if (!book) {
         return res.status(200).json({
           status: "failed",

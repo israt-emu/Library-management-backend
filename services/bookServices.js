@@ -11,7 +11,7 @@ exports.addBookServices = async (data) => {
 
 // // find single bookmark
 exports.findSingleBookServices = async (id) => {
-  console.log(id);
+
   const book = await Book.findOne({ bookId:id });
 console.log(book);
   return book;
