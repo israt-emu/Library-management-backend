@@ -7,14 +7,14 @@ exports.addBorrowedBookController = async (req, res) => {
     const {bookId} = req?.body;
     //
     const book = await findSingleBookServices(bookId);
-    // get unique id
-    const already_Borrowed = await findSingleBorrowedBook(bookId);
-    if (already_Borrowed?.bookId) {
-      return res.status(200).json({
-        status: "failed",
-        message: "This book is not available",
-      });
-    }
+    // // get unique id
+    // const already_Borrowed = await findSingleBorrowedBook(bookId);
+    // if (already_Borrowed?.bookId) {
+    //   return res.status(200).json({
+    //     status: "failed",
+    //     message: "This book is not available",
+    //   });
+    // }
     const borrowedBook = await createBorrowedBook(data);
     // console.log("book---->", req.body);
     if (borrowedBook) {
