@@ -9,7 +9,6 @@ const borrowedBookSchema = mongoose.Schema(
     bookId: {
       type: Number,
       required: true,
-      unique: true,
     },
     category: {
       type: String,

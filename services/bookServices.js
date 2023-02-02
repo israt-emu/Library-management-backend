@@ -34,11 +34,17 @@ exports.getAllBooksServices = async () => {
 //updating stock after borrow a book
 exports.updateBookStockServices = async ({book, state}) => {
   const stock = book?.totalStock;
-  console.log(stock);
+  // console.log(stock);
   if (stock > 0 && state === "borrow") {
     book.totalStock = stock - 1;
+    if (stock - 1 === 0) {
+      book.status = "Stock Out";
+    }
   } else if (state === "return") {
     book.totalStock = stock + 1;
+    if (stock + 1 > 0) {
+      book.status = "In Stock";
+    }
   }
   await book.save({validateBeforeSave: true});
   return book;
