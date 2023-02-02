@@ -1,4 +1,4 @@
-const {addUser, findUserByEmail} = require("../../services/userServices");
+const { addUser, findUserByEmail } = require("../../services/userServices");
 // const User = require("../models/User");
 
 exports.userSignUp = async (req, res) => {
@@ -10,7 +10,20 @@ exports.userSignUp = async (req, res) => {
         message: "Email is already taken",
       });
     } else {
-      const {name, email, password, role, contactNumber, imageURL} = req?.body;
+      const {
+        name,
+        email,
+        password,
+        role,
+        contactNumber,
+        imageURL,
+        studentId,
+        session,
+        year,
+        term,
+        designation,
+        educationalQualification,
+      } = req?.body;
       if (name && email && password) {
         const data = {
           name,
@@ -19,6 +32,12 @@ exports.userSignUp = async (req, res) => {
           role,
           contactNumber,
           imageURL,
+          studentId,
+          session,
+          year,
+          term,
+          designation,
+          educationalQualification,
         };
         const user = await addUser(data);
         if (user) {

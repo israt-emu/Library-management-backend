@@ -3,7 +3,7 @@ const {deleteBookmark} = require("../../services/bookMarkServices");
 // delete bookmark by Id
 exports.deleteBookmark = async (req, res) => {
   try {
-    const {id} = req.params;
+    const id=(req.params.id).trim()
     const bookmark = await deleteBookmark(id);
     if (bookmark?.deletedCount !== 0) {
       return res.status(200).json({

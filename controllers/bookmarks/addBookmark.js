@@ -1,6 +1,5 @@
 const {addBookmark, saveBookmark} = require("../../services/bookMarkServices");
 const {grabFavicon} = require("../../utils/grabFavicon");
-const {takeScreenShot} = require("../../utils/takeScreenshot");
 
 exports.addBookmark = async (req, res) => {
   try {

@@ -26,6 +26,7 @@ const userSchema = mongoose.Schema(
     role: {
       type: String,
       enum: ["admin", "student", "teacher", "stuff"],
+      required:[true,"User Role is required"]
       // default: "admin",
     },
     studentId: {
@@ -44,7 +45,7 @@ const userSchema = mongoose.Schema(
       type: String,
     },
     educationalQualification: {
-      type: string,
+      type: String,
     },
     contactNumber: {
       type: String,
