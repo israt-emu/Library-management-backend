@@ -32,18 +32,28 @@ exports.getAllRequestedBooksServices = async () => {
   return books;
 };
 //updating stock after borrow a book
-exports.updateBookStockServices = async ({ book, state }) => {
-  const stock = book?.totalStock;
-  console.log(stock);
-  if (stock > 0 && state === "borrow") {
-    book.totalStock = stock - 1;
-  } else if (state === "return") {
-    book.totalStock = stock + 1;
-  }
-  await book.save({ validateBeforeSave: true });
-  return book;
-};
-// // update bookmark
-// exports.updateBookmark = async (id, updatedInfo) => {
-//   return await Bookmark.updateOne({id}, updatedInfo, {runValidators: true});
+// exports.editRequestedBookServices = async ({ book, data }) => {
+//   const stock = book?.totalStock;
+//   console.log(stock);
+//   if (stock > 0 && state === "borrow") {
+//     book.totalStock = stock - 1;
+//   } else if (state === "return") {
+//     book.totalStock = stock + 1;
+//   }
+//   await book.save({ validateBeforeSave: true });
+//   return book;
 // };
+// update requestedbook
+exports.editRequestedBookServices = async (id, updatedInfo) => {
+  const existingRequested = await RequestedBook.find({ _id: id });
+  console.log(existingRequested,updatedInfo)
+  if (existingRequested) {
+    const result = await RequestedBook.updateOne({ id }, updatedInfo, {
+      runValidators: true,
+    });
+   
+    return result;
+  } else {
+    return existingRequested;
+  }
+};
