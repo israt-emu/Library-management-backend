@@ -17,10 +17,10 @@ exports.findSingleBookServices = async (id) => {
 };
 
 // delete requested book
-exports.deleteRequestedBookServices = async (id) => {
+exports.deleteNoticeServices = async (id) => {
   try {
-    const book = await RequestedBook.deleteOne({ _id: id });
-    return book;
+    const notice = await Notice.deleteOne({ _id: id });
+    return notice;
   } catch (error) {
     console.log(error.message);
   }
@@ -46,12 +46,12 @@ exports.getAllNoticeServices = async () => {
 // update requestedbook
 exports.editRequestedBookServices = async (id, updatedInfo) => {
   const existingRequested = await RequestedBook.find({ _id: id });
-  console.log(existingRequested,updatedInfo)
+  console.log(existingRequested, updatedInfo);
   if (existingRequested) {
     const result = await RequestedBook.updateOne({ id }, updatedInfo, {
       runValidators: true,
     });
-   
+
     return result;
   } else {
     return existingRequested;
