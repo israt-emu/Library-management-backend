@@ -27,9 +27,9 @@ exports.deleteRequestedBookServices = async (id) => {
 };
 
 // // get all book
-exports.getAllRequestedBooksServices = async () => {
-  const books = await RequestedBook.find({});
-  return books;
+exports.getAllNoticeServices = async () => {
+  const notices = await Notice.find({});
+  return notices;
 };
 //updating stock after borrow a book
 // exports.editRequestedBookServices = async ({ book, data }) => {
