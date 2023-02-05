@@ -16,6 +16,7 @@ const userRoute = require("./routes/userRoute.js");
 const borrowedBookRoute = require("./routes/borrowedBookRoute");
 const bookmarkRoute = require("./routes/bookmarkRoute.js");
 const requestedBookRoute = require("./routes/requestedBookRoute.js");
+const noticeRoute = require("./routes/noticeRoute.js");
 
 // api routes
 app.use("/api/v1/book", bookRoute);
@@ -23,5 +24,6 @@ app.use("/api/v1/user", userRoute);
 app.use("/api/v1/borrowedBook", borrowedBookRoute);
 app.use("/api/v1/bookmark", bookmarkRoute);
 app.use("/api/v1/requestedBook", requestedBookRoute);
+app.use("/api/v1/notice", noticeRoute);
 
 module.exports = app;
