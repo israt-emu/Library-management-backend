@@ -16,10 +16,10 @@ exports.findSingleBookServices = async (id) => {
   return book;
 };
 
-// delete book
-exports.deleteBookServices = async (id) => {
+// delete requested book
+exports.deleteRequestedBookServices = async (id) => {
   try {
-    const book = await Book.deleteOne({ bookId: id });
+    const book = await RequestedBook.deleteOne({ _id: id });
     return book;
   } catch (error) {
     console.log(error.message);

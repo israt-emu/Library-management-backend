@@ -25,6 +25,7 @@ const requestedBookSchema = mongoose.Schema(
     },
     requestCount: {
       type: Number,
+      default: 1,
     },
     requestedBy: {
       type: mongoose.Schema.Types.ObjectId,
