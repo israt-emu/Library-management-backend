@@ -22,11 +22,14 @@ const userSchema = mongoose.Schema(
     hashedPassword: {
       type: String,
     },
-
+    status: {
+      type: String,
+      default: "active",
+    },
     role: {
       type: String,
       enum: ["admin", "student", "teacher", "stuff"],
-      required:[true,"User Role is required"]
+      required: [true, "User Role is required"],
       // default: "admin",
     },
     studentId: {
