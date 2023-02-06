@@ -30,6 +30,12 @@ exports.findAllUser = async () => {
   const users = await User.find({});
   return users;
 };
+//
+exports.makeAdmin = async (user) => {
+  user.admin = true;
+  await user.save({validateBeforeSave: true});
+  return user;
+};
 
 // update user
 exports.updateUser = async (email, updatedInfo) => {
