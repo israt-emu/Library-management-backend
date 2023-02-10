@@ -15,7 +15,7 @@ exports.validatePassword = (password, user) => {
 };
 
 // delete user by email
-exports.deleteUser = async (email) => {
+exports.deleteUserService = async (email) => {
   const user = await User.deleteOne({email});
   return user;
 };
@@ -31,8 +31,22 @@ exports.findAllUser = async () => {
   return users;
 };
 //
-exports.makeAdmin = async (user) => {
-  user.admin = true;
+exports.makeOrDeleteAdmin = async (user) => {
+  if (user?.admin) {
+    user.admin = false;
+  } else {
+    user.admin = true;
+  }
+  await user.save({validateBeforeSave: true});
+  return user;
+};
+//
+exports.statusUpdateService = async (user) => {
+  if (user?.status === "active") {
+    user.status = "block";
+  } else {
+    user.status = "active";
+  }
   await user.save({validateBeforeSave: true});
   return user;
 };

@@ -1,12 +1,12 @@
-const {findAllUser, makeAdmin} = require("../../services/userServices");
+const {statusUpdateService, findUserByEmail} = require("../../services/userServices");
 
-exports.createAdmin = async (req, res) => {
+exports.statusUpdate = async (req, res) => {
   try {
-    const {email} = req?.body;
+    const {email, status} = req?.body;
     const user = await findUserByEmail(email);
     if (user?._id) {
-      const updateUser = await makeAdmin(user);
-      if (updateUser?.active) {
+      const updateUser = await statusUpdateService(user);
+      if (updateUser?.status !== status) {
         res.status(200).json({
           status: "success",
           updateUser,
@@ -14,7 +14,7 @@ exports.createAdmin = async (req, res) => {
       } else {
         res.status(200).json({
           status: "failed",
-          message: "Can't make admin",
+          message: "Can't Update Status",
           updateUser,
         });
       }
