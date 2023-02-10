@@ -47,6 +47,7 @@ const bookSchema = mongoose.Schema(
     status: {
       type: String,
       enum: ["In Stock", "Stock Out"],
+      default: "In Stock",
     },
     // borrowedBy: [],
     addedBy: {
