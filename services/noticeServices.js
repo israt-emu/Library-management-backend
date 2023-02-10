@@ -1,12 +1,12 @@
 const mongoose = require("mongoose");
-const RequestedBook = require("../models/RequestedBook");
+const Notice = require("../models/Notice");
 const { ObjectId } = mongoose.Types;
 
 // add new book
-exports.addRequestedBookServices = async (data) => {
-  const book = await RequestedBook.create(data);
-  await book.save({ validateBeforeSave: true });
-  return book;
+exports.adNoticeServices = async (data) => {
+  const notice = await Notice.create(data);
+  await notice.save({ validateBeforeSave: true });
+  return notice;
 };
 
 // // find single book
@@ -17,19 +17,19 @@ exports.findSingleBookServices = async (id) => {
 };
 
 // delete requested book
-exports.deleteRequestedBookServices = async (id) => {
+exports.deleteNoticeServices = async (id) => {
   try {
-    const book = await RequestedBook.deleteOne({ _id: id });
-    return book;
+    const notice = await Notice.deleteOne({ _id: id });
+    return notice;
   } catch (error) {
     console.log(error.message);
   }
 };
 
 // // get all book
-exports.getAllRequestedBooksServices = async () => {
-  const books = await RequestedBook.find({});
-  return books;
+exports.getAllNoticeServices = async () => {
+  const notices = await Notice.find({});
+  return notices;
 };
 //updating stock after borrow a book
 // exports.editRequestedBookServices = async ({ book, data }) => {
@@ -46,12 +46,12 @@ exports.getAllRequestedBooksServices = async () => {
 // update requestedbook
 exports.editRequestedBookServices = async (id, updatedInfo) => {
   const existingRequested = await RequestedBook.find({ _id: id });
-  console.log(existingRequested,updatedInfo)
+  console.log(existingRequested, updatedInfo);
   if (existingRequested) {
     const result = await RequestedBook.updateOne({ id }, updatedInfo, {
       runValidators: true,
     });
-   
+
     return result;
   } else {
     return existingRequested;
