@@ -24,7 +24,7 @@ const userSchema = mongoose.Schema(
     },
     status: {
       type: String,
-      default: "active",
+      enum: ["active", "block"],
     },
     role: {
       type: String,
