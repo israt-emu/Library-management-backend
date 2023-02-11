@@ -8,7 +8,11 @@ exports.addBookServices = async (data) => {
   await book.save({validateBeforeSave: true});
   return book;
 };
-
+// get top borrowed book
+exports.findTopBorrowedBooks = async () => {
+  const borrowedBooks = await Book.find({}).sort({totalBorrowed: -1}).limit(5);
+  return borrowedBooks;
+};
 // // find single book
 exports.findSingleBookServices = async (id) => {
   const book = await Book.findOne({bookId: id});
@@ -37,6 +41,8 @@ exports.updateBookStockServices = async ({book, state}) => {
   // console.log(stock);
   if (stock > 0 && state === "borrow") {
     book.totalStock = stock - 1;
+    book.totalBorrowed = book?.totalBorrowed + 1;
+
     if (stock - 1 === 0) {
       book.status = "Stock Out";
     }

@@ -1,13 +1,15 @@
-const {findSingleBookServices} = require("../../services/bookServices");
-const {returnBorrowedBook} = require("../../services/borrowedBookServices");
+const {findSingleBookServices, updateBookStockServices} = require("../../services/bookServices");
+const {returnBorrowedBook, findSingleBorrowedBook} = require("../../services/borrowedBookServices");
 
 exports.returnBorrowedBookController = async (req, res) => {
   try {
-    const {id: strId} = req?.params;
-    const id = Number(strId);
-    const book = await findSingleBookServices(id);
-    const deletedBook = await returnBorrowedBook(id);
-    if (deletedBook?.deletedCount !== 0) {
+    const {id: strId, bookId} = req?.body;
+    // const id = Number(strId);
+    console.log(strId);
+    const book = await findSingleBookServices(bookId);
+    const borrwedBook = await findSingleBorrowedBook(strId);
+    const returnedBook = await returnBorrowedBook(borrwedBook);
+    if (returnedBook?.status === "returned") {
       const updateBookStock = await updateBookStockServices({book, state: "return"});
       return res.status(200).json({
         status: "success",
