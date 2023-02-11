@@ -24,6 +24,9 @@ const borrowedBookSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    dueDate: {
+      type:String
+    },
   },
 
   {
