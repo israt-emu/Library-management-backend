@@ -24,10 +24,6 @@ const bookSchema = mongoose.Schema(
       type: Number,
       required: true,
     },
-    // remainingStock: {
-    //   type: Number,
-    //   required: true,
-    // },
     bookLocation: {
       type: String,
       required: true,
@@ -58,6 +54,7 @@ const bookSchema = mongoose.Schema(
     },
     totalBorrowed: {
       type: Number,
+      default: 0,
     },
     pdfLink: {
       type: String,

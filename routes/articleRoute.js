@@ -9,6 +9,9 @@ const {
 const {
   getAllArticleController,
 } = require("../controllers/article/getAllArticleController");
+const {
+  getSingleArticleController,
+} = require("../controllers/article/getSingleArticleController");
 
 const router = express.Router();
 
@@ -16,6 +19,6 @@ router.post("/addArticle", addArticleController);
 router.get("/getAllArticle", getAllArticleController);
 // router.get("/getAllBooks", getAllBookController);
 router.delete("/deleteArticle/:id", deleteArticleController);
-// router.get("/getSingleBook/:id", getSingleBookController);
+router.get("/getSingleArticle/:id", getSingleArticleController);
 
 module.exports = router;
