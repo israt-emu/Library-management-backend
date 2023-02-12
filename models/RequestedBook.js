@@ -34,7 +34,7 @@ const requestedBookSchema = mongoose.Schema(
     status: {
       type: String,
       enum: ["pending", "accepted", "available"],
-      default: "admin",
+      default: "pending",
     },
   },
 

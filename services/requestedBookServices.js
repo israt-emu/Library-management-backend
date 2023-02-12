@@ -1,25 +1,29 @@
 const mongoose = require("mongoose");
 const RequestedBook = require("../models/RequestedBook");
-const { ObjectId } = mongoose.Types;
+const {ObjectId} = mongoose.Types;
 
 // add new book
 exports.addRequestedBookServices = async (data) => {
   const book = await RequestedBook.create(data);
-  await book.save({ validateBeforeSave: true });
+  await book.save({validateBeforeSave: true});
+  return book;
+};
+exports.requestCountUpdate = async (book) => {
+  book.requestCount = book?.requestCount + 1;
+  await book.save({validateBeforeSave: true});
   return book;
 };
 
 // // find single book
-exports.findSingleBookServices = async (id) => {
-  const book = await Book.findOne({ bookId: id });
-  console.log(book);
+exports.findSingleRequestedBook = async (id) => {
+  const book = await RequestedBook.findOne({_id: id});
   return book;
 };
 
 // delete requested book
 exports.deleteRequestedBookServices = async (id) => {
   try {
-    const book = await RequestedBook.deleteOne({ _id: id });
+    const book = await RequestedBook.deleteOne({_id: id});
     return book;
   } catch (error) {
     console.log(error.message);
@@ -45,15 +49,84 @@ exports.getAllRequestedBooksServices = async () => {
 // };
 // update requestedbook
 exports.editRequestedBookServices = async (id, updatedInfo) => {
-  const existingRequested = await RequestedBook.find({ _id: id });
-  console.log(existingRequested,updatedInfo)
+  const existingRequested = await RequestedBook.find({_id: id});
+  console.log(existingRequested, updatedInfo);
   if (existingRequested) {
-    const result = await RequestedBook.updateOne({ id }, updatedInfo, {
+    const result = await RequestedBook.updateOne({id}, updatedInfo, {
       runValidators: true,
     });
-   
+
     return result;
   } else {
     return existingRequested;
   }
+};
+// get all filtered books
+exports.findAllFilteredRequestedBook = async ({status, search}) => {
+  let books;
+  if (status !== "" && search === "") {
+    books = await RequestedBook.find({status});
+  } //
+  else if (status === "" && search !== "") {
+    books = await RequestedBook.find({
+      $or: [
+        {
+          name: {
+            $regex: search,
+          },
+        },
+        {
+          writer: {
+            $regex: search,
+          },
+        },
+        {
+          category: {
+            $regex: search,
+          },
+        },
+
+        {
+          status: {
+            $regex: search,
+          },
+        },
+      ],
+    });
+  } //
+  else {
+    books = await RequestedBook.find({
+      status,
+      $or: [
+        {
+          name: {
+            $regex: search,
+          },
+        },
+        {
+          writer: {
+            $regex: search,
+          },
+        },
+        {
+          category: {
+            $regex: search,
+          },
+        },
+
+        {
+          status: {
+            $regex: search,
+          },
+        },
+      ],
+    });
+  }
+
+  return books;
+};
+// get top requested book
+exports.findTopRequestedBooks = async () => {
+  const books = await RequestedBook.find({}).sort({requestCount: -1}).limit(5);
+  return books;
 };

@@ -30,6 +30,172 @@ exports.findAllUser = async () => {
   const users = await User.find({});
   return users;
 };
+// get all filtered users
+exports.findAllFilteredUser = async ({role, status, search}) => {
+  let users;
+  if (status === "" && role === "" && search === "") {
+    users = await User.find({});
+  } //
+  else if (role !== "" && status === "" && search === "") {
+    users = await User.find({role});
+  } //
+  else if (role === "" && status !== "" && search === "") {
+    users = await User.find({status});
+  } //
+  else if (role !== "" && status !== "" && search === "") {
+    users = await User.find({role, status});
+  } //
+  else if (role !== "" && status === "" && search !== "") {
+    users = await User.find({
+      role,
+      $or: [
+        {
+          name: {
+            $regex: search,
+          },
+        },
+        {
+          email: {
+            $regex: search,
+          },
+        },
+        {
+          role: {
+            $regex: search,
+          },
+        },
+        {
+          session: {
+            $regex: search,
+          },
+        },
+        {
+          designation: {
+            $regex: search,
+          },
+        },
+        {
+          contactNumber: {
+            $regex: search,
+          },
+        },
+      ],
+    });
+  } //
+  else if (role === "" && status !== "" && search !== "") {
+    users = await User.find({
+      status,
+      $or: [
+        {
+          name: {
+            $regex: search,
+          },
+        },
+        {
+          email: {
+            $regex: search,
+          },
+        },
+        {
+          role: {
+            $regex: search,
+          },
+        },
+        {
+          session: {
+            $regex: search,
+          },
+        },
+        {
+          designation: {
+            $regex: search,
+          },
+        },
+        {
+          contactNumber: {
+            $regex: search,
+          },
+        },
+      ],
+    });
+  } //
+  else if (role === "" && status === "" && search !== "") {
+    users = await User.find({
+      $or: [
+        {
+          name: {
+            $regex: search,
+          },
+        },
+        {
+          email: {
+            $regex: search,
+          },
+        },
+        {
+          role: {
+            $regex: search,
+          },
+        },
+        {
+          session: {
+            $regex: search,
+          },
+        },
+        {
+          designation: {
+            $regex: search,
+          },
+        },
+        {
+          contactNumber: {
+            $regex: search,
+          },
+        },
+      ],
+    });
+  } //
+  else {
+    users = await User.find({
+      role,
+      status,
+      $or: [
+        {
+          name: {
+            $regex: search,
+          },
+        },
+        {
+          email: {
+            $regex: search,
+          },
+        },
+        {
+          role: {
+            $regex: search,
+          },
+        },
+        {
+          session: {
+            $regex: search,
+          },
+        },
+        {
+          designation: {
+            $regex: search,
+          },
+        },
+        {
+          contactNumber: {
+            $regex: search,
+          },
+        },
+      ],
+    });
+  }
+
+  return users;
+};
 //
 exports.makeOrDeleteAdmin = async (user) => {
   if (user?.admin) {
