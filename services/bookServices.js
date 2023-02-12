@@ -13,6 +13,11 @@ exports.findTopBorrowedBooks = async () => {
   const borrowedBooks = await Book.find({}).sort({totalBorrowed: -1}).limit(5);
   return borrowedBooks;
 };
+// get top  books
+exports.findTopBooks = async () => {
+  const books = await Book.find({}).sort({totalViews: -1}).limit(5);
+  return books;
+};
 // // find single book
 exports.findSingleBookServices = async (id) => {
   const book = await Book.findOne({bookId: id});
@@ -54,6 +59,48 @@ exports.updateBookStockServices = async ({book, state}) => {
   }
   await book.save({validateBeforeSave: true});
   return book;
+};
+// get all filtered books
+exports.findAllFilteredBook = async ({status, search}) => {
+  let books;
+  if (status !== "" && search === "") {
+    books = await Book.find({status});
+  } //
+  else if (status === "" && search !== "") {
+    books = await Book.find({
+      $or: [
+        {
+          name: {
+            $regex: search,
+          },
+        },
+        {
+          category: {
+            $regex: search,
+          },
+        },
+      ],
+    });
+  } //
+  else {
+    books = await Book.find({
+      status,
+      $or: [
+        {
+          name: {
+            $regex: search,
+          },
+        },
+        {
+          category: {
+            $regex: search,
+          },
+        },
+      ],
+    });
+  }
+
+  return books;
 };
 // // update bookmark
 // exports.updateBookmark = async (id, updatedInfo) => {

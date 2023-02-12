@@ -34,6 +34,110 @@ exports.findBorrowedBookByUserId = async (borrowerId) => {
   const borrowedBooks = await BorrowedBook.find({borrowerId});
   return borrowedBooks;
 };
+// get all filtered borrowed books
+exports.findAllFilteredBorrowedBook = async ({status, search, id}) => {
+  let books;
+  if (status !== "" && search === "" && id === "") {
+    books = await BorrowedBook.find({status});
+  } //
+  else if (status === "" && search !== "" && id === "") {
+    books = await BorrowedBook.find({
+      $or: [
+        {
+          name: {
+            $regex: search,
+          },
+        },
+        {
+          category: {
+            $regex: search,
+          },
+        },
+
+        {
+          borrowerName: {
+            $regex: search,
+          },
+        },
+      ],
+    });
+  } else if (status !== "" && search !== "" && id === "") {
+    books = await BorrowedBook.find({
+      status,
+      $or: [
+        {
+          name: {
+            $regex: search,
+          },
+        },
+        {
+          category: {
+            $regex: search,
+          },
+        },
+
+        {
+          borrowerName: {
+            $regex: search,
+          },
+        },
+      ],
+    });
+  } //
+  else if (status === "" && search !== "" && id !== "") {
+    books = await BorrowedBook.find({
+      borrowerId: id,
+      $or: [
+        {
+          name: {
+            $regex: search,
+          },
+        },
+        {
+          category: {
+            $regex: search,
+          },
+        },
+
+        {
+          borrowerName: {
+            $regex: search,
+          },
+        },
+      ],
+    });
+  } else if (status !== "" && search === "" && id !== "") {
+    books = await BorrowedBook.find({
+      borrowerId: id,
+      status,
+    });
+  } else {
+    books = await BorrowedBook.find({
+      borrowerId: id,
+      status,
+      $or: [
+        {
+          name: {
+            $regex: search,
+          },
+        },
+        {
+          category: {
+            $regex: search,
+          },
+        },
+
+        {
+          borrowerName: {
+            $regex: search,
+          },
+        },
+      ],
+    });
+  }
+
+  return books;
+};
 
 // // update bookmark
 // exports.updateBookmark = async (id, updatedInfo) => {

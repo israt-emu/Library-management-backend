@@ -37,10 +37,6 @@ const borrowedBookSchema = mongoose.Schema({
     type: Date,
     required: true,
   },
-  estimateReturnDate: {
-    type: Date,
-    required: true,
-  },
   returnDate: {
     type: Date,
   },
