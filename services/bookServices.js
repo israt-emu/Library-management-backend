@@ -22,6 +22,13 @@ exports.findTopBooks = async () => {
 exports.findSingleBookServices = async (id) => {
   const book = await Book.findOne({bookId: id});
   console.log(book);
+  book.views++; // assuming you have a "views" field in your article schema
+
+  book.save((err, updatedArticle) => {
+    if (err) {
+      return res.status(500).send(err);
+    }
+  });
   return book;
 };
 
