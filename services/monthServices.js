@@ -29,6 +29,7 @@ exports.deleteMonthServices = async (id) => {
 // // get all book
 exports.getAllMonthServices = async () => {
   const month = await Month.find({});
+
   return month;
 };
 //updating stock after borrow a book
