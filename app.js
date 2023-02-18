@@ -17,6 +17,7 @@ const borrowedBookRoute = require("./routes/borrowedBookRoute");
 const bookmarkRoute = require("./routes/bookmarkRoute.js");
 const requestedBookRoute = require("./routes/requestedBookRoute.js");
 const noticeRoute = require("./routes/noticeRoute.js");
+const monthRoute = require("./routes/monthRoute.js");
 const articleRoute = require("./routes/articleRoute.js");
 const notificationRoute = require("./routes/notificationRoute.js");
 
@@ -27,6 +28,7 @@ app.use("/api/v1/borrowedBook", borrowedBookRoute);
 app.use("/api/v1/bookmark", bookmarkRoute);
 app.use("/api/v1/requestedBook", requestedBookRoute);
 app.use("/api/v1/notice", noticeRoute);
+app.use("/api/v1/month", monthRoute);
 app.use("/api/v1/article", articleRoute);
 app.use("/api/v1/notification", notificationRoute);
 

@@ -49,8 +49,9 @@ const bookSchema = mongoose.Schema(
     addedBy: {
       type: String,
     },
-    totalViews: {
+    views: {
       type: Number,
+      default: 0,
     },
     totalBorrowed: {
       type: Number,

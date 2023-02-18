@@ -12,7 +12,15 @@ exports.addArticleServices = async (data) => {
 // // find single book
 exports.findSingleArticleServices = async (id) => {
   const article = await Article.findOne({ _id: id });
-  console.log(article);
+  // update article view count
+  article.views++; // assuming you have a "views" field in your article schema
+
+  article.save((err, updatedArticle) => {
+    if (err) {
+      return res.status(500).send(err);
+    }
+  });
+
   return article;
 };
 
