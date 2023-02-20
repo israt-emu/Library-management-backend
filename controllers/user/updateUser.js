@@ -5,7 +5,7 @@ exports.updateUser = async (req, res) => {
   try {
     const { email } = req.params;
     console.log(email);
-
+    // updated user finally
     //  users updated data
     const data = req?.body;
     const user = await updateUser(email, data);
