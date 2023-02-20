@@ -15,6 +15,16 @@ exports.findSingleNotificationServices = async (id) => {
   console.log(notification);
   return notification;
 };
+exports.changeStatusNotificationServices = async (id) => {
+  const notification = await Notification.findOne({ _id: id });
+  notification.read = true;
+  notification.save((err, updatedData) => {
+    if (err) {
+      return res.status(500).send(err);
+    }
+  });
+  return notification;
+};
 
 // delete requested book
 exports.deleteNotificationServices = async (id) => {
