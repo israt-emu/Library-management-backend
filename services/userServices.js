@@ -6,7 +6,7 @@ const dotenv = require("dotenv").config();
 exports.addUser = async (userInfo) => {
   const user = await User.create(userInfo);
   user.setPassword(userInfo?.password);
-  await user.save({validateBeforeSave: true});
+  await user.save({ validateBeforeSave: true });
   return user;
 };
 //matching password
@@ -16,13 +16,18 @@ exports.validatePassword = (password, user) => {
 
 // delete user by email
 exports.deleteUserService = async (email) => {
-  const user = await User.deleteOne({email});
+  const user = await User.deleteOne({ email });
   return user;
 };
 
 // find user by email
 exports.findUserByEmail = async (email) => {
-  return await User.findOne({email});
+  return await User.findOne({ email });
+};
+// find user by email
+exports.findSingleUser = async (email) => {
+  console.log(email);
+  return await User.findOne({ email });
 };
 
 // get all users
@@ -31,19 +36,19 @@ exports.findAllUser = async () => {
   return users;
 };
 // get all filtered users
-exports.findAllFilteredUser = async ({role, status, search}) => {
+exports.findAllFilteredUser = async ({ role, status, search }) => {
   let users;
   if (status === "" && role === "" && search === "") {
     users = await User.find({});
   } //
   else if (role !== "" && status === "" && search === "") {
-    users = await User.find({role});
+    users = await User.find({ role });
   } //
   else if (role === "" && status !== "" && search === "") {
-    users = await User.find({status});
+    users = await User.find({ status });
   } //
   else if (role !== "" && status !== "" && search === "") {
-    users = await User.find({role, status});
+    users = await User.find({ role, status });
   } //
   else if (role !== "" && status === "" && search !== "") {
     users = await User.find({
@@ -203,7 +208,7 @@ exports.makeOrDeleteAdmin = async (user) => {
   } else {
     user.admin = true;
   }
-  await user.save({validateBeforeSave: true});
+  await user.save({ validateBeforeSave: true });
   return user;
 };
 //
@@ -213,24 +218,19 @@ exports.statusUpdateService = async (user) => {
   } else {
     user.status = "active";
   }
-  await user.save({validateBeforeSave: true});
+  await user.save({ validateBeforeSave: true });
   return user;
 };
 
 // update user
 exports.updateUser = async (email, updatedInfo) => {
-  const {name, newPassword, userEmail} = updatedInfo;
   console.log("updatedinof ---------", updatedInfo);
-  const updatedpassword = process.env.APP_PASS_PREFIX + newPassword + process.env.APP_PASS_SUFFIX;
 
-  const hash = crypto.createHash("sha256").update(updatedpassword).digest("hex");
-
-  const user = await User.findOne({email});
-  user.name = name;
-  user.email = userEmail;
-  user.hashedPassword = hash;
-  await user.save({validateBeforeSave: true});
+  const result = await User.findOneAndUpdate({ email: email }, updatedInfo, {
+    new: true,
+    runValidators: true,
+  });
 
   // const user = await User.updateOne({email}, updatedInfo, {runValidators: true});
-  return user;
+  return result;
 };

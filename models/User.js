@@ -25,6 +25,7 @@ const userSchema = mongoose.Schema(
     status: {
       type: String,
       enum: ["active", "block"],
+      default: "active",
     },
     role: {
       type: String,
@@ -54,9 +55,21 @@ const userSchema = mongoose.Schema(
     educationalQualification: {
       type: String,
     },
+    permanantAddress: {
+      type: String,
+    },
+    currentAddress: {
+      type: String,
+    },
+    experience: {
+      type: String,
+    },
     contactNumber: {
       type: String,
-      validate: [validator.isMobilePhone, "Please provide a valid contact number"],
+      validate: [
+        validator.isMobilePhone,
+        "Please provide a valid contact number",
+      ],
     },
 
     imageURL: {
@@ -69,13 +82,15 @@ const userSchema = mongoose.Schema(
   }
 );
 userSchema.methods.setPassword = function (userPassword) {
-  const password = process.env.APP_PASS_PREFIX + userPassword + process.env.APP_PASS_SUFFIX;
+  const password =
+    process.env.APP_PASS_PREFIX + userPassword + process.env.APP_PASS_SUFFIX;
   const hash = crypto.createHash("sha256").update(password).digest("hex");
   this.hashedPassword = hash;
 };
 
 userSchema.methods.validPassword = function (userPassword) {
-  const password = process.env.APP_PASS_PREFIX + userPassword + process.env.APP_PASS_SUFFIX;
+  const password =
+    process.env.APP_PASS_PREFIX + userPassword + process.env.APP_PASS_SUFFIX;
   const hash = crypto.createHash("sha256").update(password).digest("hex");
   return this.hashedPassword === hash;
 };
