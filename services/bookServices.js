@@ -1,28 +1,27 @@
 const Book = require("../models/Books");
 const mongoose = require("mongoose");
-const { ObjectId } = mongoose.Types;
+const {ObjectId} = mongoose.Types;
 
 // add new book
 exports.addBookServices = async (data) => {
   const book = await Book.create(data);
-  await book.save({ validateBeforeSave: true });
+  await book.save({validateBeforeSave: true});
   return book;
 };
 // get top borrowed book
 exports.findTopBorrowedBooks = async () => {
-  const borrowedBooks = await Book.find({})
-    .sort({ totalBorrowed: -1 })
-    .limit(5);
+  const borrowedBooks = await Book.find({}).sort({totalBorrowed: -1}).limit(5);
   return borrowedBooks;
 };
 // get top  books
 exports.findTopBooks = async () => {
-  const books = await Book.find({}).sort({ views: -1 }).limit(5);
+  const books = await Book.find({}).sort({views: -1}).limit(5);
   return books;
 };
+
 // // find single book
 exports.findSingleBookServices = async (id) => {
-  const book = await Book.findOne({ bookId: id });
+  const book = await Book.findOne({bookId: id});
   console.log(book);
   book.views++; // assuming you have a "views" field in your article schema
 
@@ -37,7 +36,7 @@ exports.findSingleBookServices = async (id) => {
 // delete book
 exports.deleteBookServices = async (id) => {
   try {
-    const book = await Book.deleteOne({ bookId: id });
+    const book = await Book.deleteOne({bookId: id});
     return book;
   } catch (error) {
     console.log(error.message);
@@ -46,11 +45,11 @@ exports.deleteBookServices = async (id) => {
 
 // // get all book
 exports.getAllBooksServices = async () => {
-  const books = await Book.find({});
+  const books = await Book.find({}).sort({createdAt: -1});
   return books;
 };
 //updating stock after borrow a book
-exports.updateBookStockServices = async ({ book, state }) => {
+exports.updateBookStockServices = async ({book, state}) => {
   const stock = book?.totalStock;
   // console.log(stock);
   if (stock > 0 && state === "borrow") {
@@ -66,14 +65,14 @@ exports.updateBookStockServices = async ({ book, state }) => {
       book.status = "In Stock";
     }
   }
-  await book.save({ validateBeforeSave: true });
+  await book.save({validateBeforeSave: true});
   return book;
 };
 // get all filtered books
-exports.findAllFilteredBook = async ({ status, search }) => {
+exports.findAllFilteredBook = async ({status, search}) => {
   let books;
   if (status !== "" && search === "") {
-    books = await Book.find({ status });
+    books = await Book.find({status});
   } //
   else if (status === "" && search !== "") {
     books = await Book.find({
@@ -81,15 +80,17 @@ exports.findAllFilteredBook = async ({ status, search }) => {
         {
           name: {
             $regex: search,
+            $options: "i",
           },
         },
         {
           category: {
             $regex: search,
+            $options: "i",
           },
         },
       ],
-    });
+    }).sort({createdAt: -1});
   } //
   else {
     books = await Book.find({
@@ -98,17 +99,57 @@ exports.findAllFilteredBook = async ({ status, search }) => {
         {
           name: {
             $regex: search,
+            $options: "i",
           },
         },
         {
           category: {
             $regex: search,
+            $options: "i",
           },
         },
       ],
-    });
+    }).sort({createdAt: -1});
   }
 
+  return books;
+};
+//find books by search
+exports.findBooksBySearch = async (search) => {
+  const books = await Book.find({
+    $or: [
+      {
+        name: {
+          $regex: search,
+          $options: "i",
+        },
+      },
+      {
+        category: {
+          $regex: search,
+          $options: "i",
+        },
+      },
+      {
+        description: {
+          $regex: search,
+          $options: "i",
+        },
+      },
+      {
+        writer: {
+          $regex: search,
+          $options: "i",
+        },
+      },
+      {
+        publications: {
+          $regex: search,
+          $options: "i",
+        },
+      },
+    ],
+  }).sort({createdAt: -1});
   return books;
 };
 // // update bookmark

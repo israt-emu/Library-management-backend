@@ -1,18 +1,19 @@
-const {getAllArticleServices} = require("../../services/articleServices");
+const {findBooksBySearch} = require("../../services/bookServices");
 
-exports.getAllArticleController = async (req, res) => {
+exports.getBooksBySearch = async (req, res) => {
   try {
-    const article = await getAllArticleServices();
-    if (article?.length > 0) {
+    const {search} = req?.body;
+    const books = await findBooksBySearch(search);
+    if (books?.length > 0) {
       res.status(200).json({
         status: "success",
-        article: article,
+        books,
       });
     } else {
       res.status(200).json({
         status: "failed",
-        message: "Unable to get articles",
-        article,
+        message: "Unable to get books",
+        books,
       });
     }
   } catch (error) {

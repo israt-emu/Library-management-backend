@@ -28,7 +28,7 @@ exports.deleteNoticeServices = async (id) => {
 
 // // get all book
 exports.getAllNoticeServices = async () => {
-  const notices = await Notice.find({});
+  const notices = await Notice.find({}).sort({createdAt: -1});
   return notices;
 };
 //updating stock after borrow a book
