@@ -32,7 +32,7 @@ exports.deleteRequestedBookServices = async (id) => {
 
 // // get all book
 exports.getAllRequestedBooksServices = async () => {
-  const books = await RequestedBook.find({});
+  const books = await RequestedBook.find({}).sort({createdAt: -1});
   return books;
 };
 //updating stock after borrow a book
@@ -65,7 +65,7 @@ exports.editRequestedBookServices = async (id, updatedInfo) => {
 exports.findAllFilteredRequestedBook = async ({status, search}) => {
   let books;
   if (status !== "" && search === "") {
-    books = await RequestedBook.find({status});
+    books = await RequestedBook.find({status}).sort({createdAt: -1});
   } //
   else if (status === "" && search !== "") {
     books = await RequestedBook.find({
@@ -92,7 +92,7 @@ exports.findAllFilteredRequestedBook = async ({status, search}) => {
           },
         },
       ],
-    });
+    }).sort({createdAt: -1});
   } //
   else {
     books = await RequestedBook.find({
@@ -101,26 +101,30 @@ exports.findAllFilteredRequestedBook = async ({status, search}) => {
         {
           name: {
             $regex: search,
+            $options: "i",
           },
         },
         {
           writer: {
             $regex: search,
+            $options: "i",
           },
         },
         {
           category: {
             $regex: search,
+            $options: "i",
           },
         },
 
         {
           status: {
             $regex: search,
+            $options: "i",
           },
         },
       ],
-    });
+    }).sort({createdAt: -1});
   }
 
   return books;

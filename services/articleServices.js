@@ -1,17 +1,17 @@
 const mongoose = require("mongoose");
 const Article = require("../models/Article");
-const { ObjectId } = mongoose.Types;
+const {ObjectId} = mongoose.Types;
 
 // add new book
 exports.addArticleServices = async (data) => {
   const article = await Article.create(data);
-  await article.save({ validateBeforeSave: true });
+  await article.save({validateBeforeSave: true});
   return article;
 };
 
 // // find single book
 exports.findSingleArticleServices = async (id) => {
-  const article = await Article.findOne({ _id: id });
+  const article = await Article.findOne({_id: id});
   // update article view count
   article.views++; // assuming you have a "views" field in your article schema
 
@@ -27,36 +27,35 @@ exports.findSingleArticleServices = async (id) => {
 // delete requested book
 exports.deleteArticleServices = async (id) => {
   try {
-    const article = await Article.deleteOne({ _id: id });
+    const article = await Article.deleteOne({_id: id});
     return article;
   } catch (error) {
     console.log(error.message);
   }
 };
 
-// // get all book
+// // get all articles
 exports.getAllArticleServices = async () => {
-  const articles = await Article.find({});
+  const articles = await Article.find({}).sort({createdAt: -1});
   return articles;
 };
-//updating stock after borrow a book
-// exports.editRequestedBookServices = async ({ book, data }) => {
-//   const stock = book?.totalStock;
-//   console.log(stock);
-//   if (stock > 0 && state === "borrow") {
-//     book.totalStock = stock - 1;
-//   } else if (state === "return") {
-//     book.totalStock = stock + 1;
-//   }
-//   await book.save({ validateBeforeSave: true });
-//   return book;
-// };
-// update requestedbook
+
+// // get 4 latest articles
+exports.findLatestArticles = async () => {
+  const articles = await Article.find({}).sort({createdAt: -1}).limit(4);
+  return articles;
+};
+// // get 4 popular articles
+exports.findPopularArticles = async () => {
+  const articles = await Article.find({}).sort({views: -1}).limit(4);
+  return articles;
+};
+
 exports.editRequestedBookServices = async (id, updatedInfo) => {
-  const existingRequested = await RequestedBook.find({ _id: id });
+  const existingRequested = await RequestedBook.find({_id: id});
   console.log(existingRequested, updatedInfo);
   if (existingRequested) {
-    const result = await RequestedBook.updateOne({ id }, updatedInfo, {
+    const result = await RequestedBook.updateOne({id}, updatedInfo, {
       runValidators: true,
     });
 

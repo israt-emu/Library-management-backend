@@ -38,7 +38,7 @@ exports.deleteNotificationServices = async (id) => {
 
 // // get all book
 exports.getAllNotificationServices = async () => {
-  const notification = await Notification.find({});
+  const notification = await Notification.find({}).sort({createdAt: -1});
   return notification;
 };
 //updating stock after borrow a book

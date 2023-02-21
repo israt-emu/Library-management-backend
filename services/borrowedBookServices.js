@@ -25,20 +25,20 @@ exports.returnBorrowedBook = async (borrowedBook) => {
 
 // // get all book
 exports.findAllBorrowedBook = async () => {
-  const borrowedBooks = await BorrowedBook.find({});
+  const borrowedBooks = await BorrowedBook.find({}).sort({createdAt: -1});
   return borrowedBooks;
 };
 //
 //find by userid
 exports.findBorrowedBookByUserId = async (borrowerId) => {
-  const borrowedBooks = await BorrowedBook.find({borrowerId});
+  const borrowedBooks = await BorrowedBook.find({borrowerId}).sort({createdAt: -1});
   return borrowedBooks;
 };
 // get all filtered borrowed books
 exports.findAllFilteredBorrowedBook = async ({status, search, id}) => {
   let books;
   if (status !== "" && search === "" && id === "") {
-    books = await BorrowedBook.find({status});
+    books = await BorrowedBook.find({status}).sort({createdAt: -1});
   } //
   else if (status === "" && search !== "" && id === "") {
     books = await BorrowedBook.find({
@@ -46,21 +46,24 @@ exports.findAllFilteredBorrowedBook = async ({status, search, id}) => {
         {
           name: {
             $regex: search,
+            $options: "i",
           },
         },
         {
           category: {
             $regex: search,
+            $options: "i",
           },
         },
 
         {
           borrowerName: {
             $regex: search,
+            $options: "i",
           },
         },
       ],
-    });
+    }).sort({createdAt: -1});
   } else if (status !== "" && search !== "" && id === "") {
     books = await BorrowedBook.find({
       status,
@@ -68,21 +71,24 @@ exports.findAllFilteredBorrowedBook = async ({status, search, id}) => {
         {
           name: {
             $regex: search,
+            $options: "i",
           },
         },
         {
           category: {
             $regex: search,
+            $options: "i",
           },
         },
 
         {
           borrowerName: {
             $regex: search,
+            $options: "i",
           },
         },
       ],
-    });
+    }).sort({createdAt: -1});
   } //
   else if (status === "" && search !== "" && id !== "") {
     books = await BorrowedBook.find({
@@ -91,21 +97,24 @@ exports.findAllFilteredBorrowedBook = async ({status, search, id}) => {
         {
           name: {
             $regex: search,
+            $options: "i",
           },
         },
         {
           category: {
             $regex: search,
+            $options: "i",
           },
         },
 
         {
           borrowerName: {
             $regex: search,
+            $options: "i",
           },
         },
       ],
-    });
+    }).sort({createdAt: -1});
   } else if (status !== "" && search === "" && id !== "") {
     books = await BorrowedBook.find({
       borrowerId: id,
@@ -119,21 +128,24 @@ exports.findAllFilteredBorrowedBook = async ({status, search, id}) => {
         {
           name: {
             $regex: search,
+            $options: "i",
           },
         },
         {
           category: {
             $regex: search,
+            $options: "i",
           },
         },
 
         {
           borrowerName: {
             $regex: search,
+            $options: "i",
           },
         },
       ],
-    });
+    }).sort({createdAt: -1});
   }
 
   return books;
