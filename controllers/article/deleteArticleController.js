@@ -1,10 +1,9 @@
-const { deleteArticleServices } = require("../../services/articleServices");
+const {deleteArticleServices} = require("../../services/articleServices");
 
 // delete bookby Id
 exports.deleteArticleController = async (req, res) => {
   try {
-    const { id } = req.params;
-    console.log("-----id", id);
+    const {id} = req?.params;
     const article = await deleteArticleServices(id);
     if (article?.deletedCount !== 0) {
       return res.status(200).json({
@@ -14,7 +13,7 @@ exports.deleteArticleController = async (req, res) => {
     } else {
       return res.status(400).json({
         status: "failed",
-        message: "article not deleted",
+        message: "article can't deleted",
       });
     }
   } catch (error) {
