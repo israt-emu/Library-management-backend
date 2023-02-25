@@ -4,6 +4,7 @@ const {ObjectId} = mongoose.Types;
 
 // add new book
 exports.addNotificationServices = async (data) => {
+  console.log(data);
   const notification = await Notification.create(data);
   await notification.save({validateBeforeSave: true});
   return notification;
