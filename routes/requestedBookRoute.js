@@ -4,6 +4,7 @@ const {deleteRequestedBookController} = require("../controllers/requestedBook/de
 const {editRequestedBookController} = require("../controllers/requestedBook/editRequestedBookController");
 const {getAllRequestedBookController} = require("../controllers/requestedBook/getAllRequestedBookController");
 const {getFilteredRequestedBooks} = require("../controllers/requestedBook/getFilteredRequestedBooks");
+const {getSingleRequestedBookController} = require("../controllers/requestedBook/getSingleRequestedBook");
 const {getTopRequestedBooks} = require("../controllers/requestedBook/getTopRequestedBooks");
 const {increaseRequestCount} = require("../controllers/requestedBook/increaseRequestCount");
 const router = express.Router();
@@ -11,6 +12,7 @@ const router = express.Router();
 router.post("/addRequestedBook", addRequestedBookController);
 router.get("/getAllRequestedBooks", getAllRequestedBookController);
 router.get("/topRequestedBooks", getTopRequestedBooks);
+router.get("/getSingleRequestedBook/:id", getSingleRequestedBookController);
 router.delete("/deleteRequestedBook/:id", deleteRequestedBookController);
 router.post("/editRequestedBook/:id", editRequestedBookController);
 router.post("/requesteCount", increaseRequestCount);

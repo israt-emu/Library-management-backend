@@ -14,7 +14,7 @@ exports.requestCountUpdate = async (book) => {
   return book;
 };
 
-// // find single book
+// // find single requested book
 exports.findSingleRequestedBook = async (id) => {
   const book = await RequestedBook.findOne({_id: id});
   return book;
@@ -30,29 +30,18 @@ exports.deleteRequestedBookServices = async (id) => {
   }
 };
 
-// // get all book
+// // get all requested book
 exports.getAllRequestedBooksServices = async () => {
   const books = await RequestedBook.find({}).sort({createdAt: -1});
   return books;
 };
-//updating stock after borrow a book
-// exports.editRequestedBookServices = async ({ book, data }) => {
-//   const stock = book?.totalStock;
-//   console.log(stock);
-//   if (stock > 0 && state === "borrow") {
-//     book.totalStock = stock - 1;
-//   } else if (state === "return") {
-//     book.totalStock = stock + 1;
-//   }
-//   await book.save({ validateBeforeSave: true });
-//   return book;
-// };
+
 // update requestedbook
 exports.editRequestedBookServices = async (id, updatedInfo) => {
   const existingRequested = await RequestedBook.find({_id: id});
   console.log(existingRequested, updatedInfo);
   if (existingRequested) {
-    const result = await RequestedBook.updateOne({id}, updatedInfo, {
+    const result = await RequestedBook.updateOne({_id: id}, updatedInfo, {
       runValidators: true,
     });
 

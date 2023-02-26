@@ -51,16 +51,16 @@ exports.findPopularArticles = async () => {
   return articles;
 };
 
-exports.editRequestedBookServices = async (id, updatedInfo) => {
-  const existingRequested = await RequestedBook.find({_id: id});
-  console.log(existingRequested, updatedInfo);
-  if (existingRequested) {
-    const result = await RequestedBook.updateOne({id}, updatedInfo, {
+exports.editArticleServices = async (id, updatedInfo) => {
+  const existingArticle = await Article.findOne({_id: id});
+  console.log(existingArticle, updatedInfo);
+  if (existingArticle) {
+    const result = await Article.updateOne({_id: id}, updatedInfo, {
       runValidators: true,
     });
 
     return result;
   } else {
-    return existingRequested;
+    return existingArticle;
   }
 };
