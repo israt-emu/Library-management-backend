@@ -1,4 +1,4 @@
-const { getAllNoticeServices } = require("../../services/noticeServices");
+const {getAllNoticeServices} = require("../../services/noticeServices");
 
 exports.getAllNoticeController = async (req, res) => {
   try {
@@ -9,7 +9,7 @@ exports.getAllNoticeController = async (req, res) => {
         notice: notice,
       });
     } else {
-      res.status(400).json({
+      res.status(200).json({
         status: "failed",
         message: "Unable to get books",
         notice,
