@@ -1,25 +1,24 @@
 const mongoose = require("mongoose");
 const Notice = require("../models/Notice");
-const { ObjectId } = mongoose.Types;
+const {ObjectId} = mongoose.Types;
 
 // add new book
 exports.adNoticeServices = async (data) => {
   const notice = await Notice.create(data);
-  await notice.save({ validateBeforeSave: true });
+  await notice.save({validateBeforeSave: true});
   return notice;
 };
 
-// // find single book
-exports.findSingleBookServices = async (id) => {
-  const book = await Book.findOne({ bookId: id });
-  console.log(book);
-  return book;
+// // find single notice
+exports.findSingleNoticeServices = async (id) => {
+  const notice = await Notice.findOne({_id: id});
+  return notice;
 };
 
 // delete requested book
 exports.deleteNoticeServices = async (id) => {
   try {
-    const notice = await Notice.deleteOne({ _id: id });
+    const notice = await Notice.deleteOne({_id: id});
     return notice;
   } catch (error) {
     console.log(error.message);
@@ -43,17 +42,18 @@ exports.getAllNoticeServices = async () => {
 //   await book.save({ validateBeforeSave: true });
 //   return book;
 // };
-// update requestedbook
-exports.editRequestedBookServices = async (id, updatedInfo) => {
-  const existingRequested = await RequestedBook.find({ _id: id });
-  console.log(existingRequested, updatedInfo);
-  if (existingRequested) {
-    const result = await RequestedBook.updateOne({ id }, updatedInfo, {
+
+// update notice
+exports.editNoticeServices = async (id, updatedInfo) => {
+  const existingNotice = await Notice.find({_id: id});
+  // console.log(existingRequested, updatedInfo);
+  if (existingNotice) {
+    const result = await Notice.updateOne({_id: id}, updatedInfo, {
       runValidators: true,
     });
 
     return result;
   } else {
-    return existingRequested;
+    return existingNotice;
   }
 };

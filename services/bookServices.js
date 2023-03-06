@@ -38,7 +38,20 @@ exports.findSingleBookServices = async (id) => {
   });
   return book;
 };
+// update book
+exports.editBookServices = async (id, updatedInfo) => {
+  const existingBook = await Book.find({_id: id});
+  // console.log(existingRequested, updatedInfo);
+  if (existingBook) {
+    const result = await Book.updateOne({_id: id}, updatedInfo, {
+      runValidators: true,
+    });
 
+    return result;
+  } else {
+    return existingBook;
+  }
+};
 // delete book
 exports.deleteBookServices = async (id) => {
   try {
