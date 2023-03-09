@@ -1,10 +1,11 @@
-const { findSingleArticleServices } = require("../../services/articleServices");
+const {findSingleArticleServices} = require("../../services/articleServices");
 
 exports.getSingleArticleController = async (req, res) => {
   try {
-    const { id } = req?.params;
+    const {id} = req?.params;
+    const {edit} = req?.body;
     console.log("----req---", req.params, id);
-    const article = await findSingleArticleServices(id);
+    const article = await findSingleArticleServices(id, edit);
     if (!article) {
       return res.status(200).json({
         status: "failed",

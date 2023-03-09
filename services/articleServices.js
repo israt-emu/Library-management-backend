@@ -10,16 +10,18 @@ exports.addArticleServices = async (data) => {
 };
 
 // // find single book
-exports.findSingleArticleServices = async (id) => {
+exports.findSingleArticleServices = async (id, edit) => {
   const article = await Article.findOne({_id: id});
-  // update article view count
-  article.views++; // assuming you have a "views" field in your article schema
+  if (!edit) {
+    // update article view count
+    article.views++; // assuming you have a "views" field in your article schema
 
-  article.save((err, updatedArticle) => {
-    if (err) {
-      return res.status(500).send(err);
-    }
-  });
+    article.save((err, updatedArticle) => {
+      if (err) {
+        return res.status(500).send(err);
+      }
+    });
+  }
 
   return article;
 };

@@ -1,4 +1,4 @@
-const {editArticleServices} = require("../../services/articleServices");
+const {editArticleServices, findSingleArticleServices} = require("../../services/articleServices");
 
 exports.editArticleController = async (req, res) => {
   try {
@@ -7,10 +7,11 @@ exports.editArticleController = async (req, res) => {
     const result = await editArticleServices(id, data);
     console.log(result);
     if (result?.modifiedCount === 1) {
+      const article = await findSingleArticleServices(id, true);
       return res.status(200).json({
         status: "success",
         message: "Article Successfully updated",
-        article: result,
+        article,
       });
     }
     if (result?.modifiedCount !== 1) {

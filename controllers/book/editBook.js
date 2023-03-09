@@ -1,4 +1,4 @@
-const {editBookServices} = require("../../services/bookServices");
+const {editBookServices, findSingleBookServicesById} = require("../../services/bookServices");
 
 exports.editBookController = async (req, res) => {
   try {
@@ -7,10 +7,11 @@ exports.editBookController = async (req, res) => {
     const result = await editBookServices(id, data);
     console.log(result);
     if (result?.modifiedCount == 1) {
+      const book = await findSingleBookServicesById(id);
       return res.status(200).json({
         status: "success",
         message: "Book Successfully updated",
-        book: result,
+        book,
       });
     }
     if (result?.modifiedCount !== 1) {
