@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const Notification = require("../models/Notification");
 const {ObjectId} = mongoose.Types;
 
-// add new book
+// add new notification
 exports.addNotificationServices = async (data) => {
   console.log(data);
   const notification = await Notification.create(data);
@@ -10,12 +10,13 @@ exports.addNotificationServices = async (data) => {
   return notification;
 };
 
-// // find single book
+// // find single notification
 exports.findSingleNotificationServices = async (id) => {
   const notification = await Notification.findOne({_id: id});
   console.log(notification);
   return notification;
 };
+//change notification status
 exports.changeStatusNotificationServices = async (id) => {
   const notification = await Notification.findOne({_id: id});
   notification.read = true;
@@ -27,7 +28,7 @@ exports.changeStatusNotificationServices = async (id) => {
   return notification;
 };
 
-// delete requested book
+// delete  notification
 exports.deleteNotificationServices = async (id) => {
   try {
     const notification = await Notification.deleteOne({_id: id});
@@ -42,6 +43,7 @@ exports.getAllNotificationServices = async () => {
   const notification = await Notification.find({}).sort({createdAt: -1});
   return notification;
 };
+//get notification by user id
 exports.getNotificationByUserIdServices = async (id) => {
   const notification = await Notification.find({user: id}).sort({createdAt: -1});
   return notification;

@@ -2,12 +2,13 @@ const mongoose = require("mongoose");
 const RequestedBook = require("../models/RequestedBook");
 const {ObjectId} = mongoose.Types;
 
-// add new book
+// add new requested book
 exports.addRequestedBookServices = async (data) => {
   const book = await RequestedBook.create(data);
   await book.save({validateBeforeSave: true});
   return book;
 };
+//
 exports.requestCountUpdate = async (book) => {
   book.requestCount = book?.requestCount + 1;
   await book.save({validateBeforeSave: true});

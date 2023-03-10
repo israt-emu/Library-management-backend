@@ -1,21 +1,21 @@
 const BorrowedBook = require("../models/BorrowedBook");
 const mongoose = require("mongoose");
 
-// add new book
+// add new borrowed book
 exports.createBorrowedBook = async (data) => {
   const borrowedBook = await BorrowedBook.create(data);
   await borrowedBook.save();
   return borrowedBook;
 };
 
-// // find single book
+// // find single borrowed book
 exports.findSingleBorrowedBook = async (id) => {
   const borrowedBook = await BorrowedBook.findOne({_id: id});
   // console.log(book);
   return borrowedBook;
 };
 
-// delete book
+// delete borrowed book
 exports.returnBorrowedBook = async (borrowedBook) => {
   borrowedBook.status = "returned";
   borrowedBook.returnDate = new Date();
@@ -23,13 +23,13 @@ exports.returnBorrowedBook = async (borrowedBook) => {
   return borrowedBook;
 };
 
-// // get all book
+// // get all borrowed book
 exports.findAllBorrowedBook = async () => {
   const borrowedBooks = await BorrowedBook.find({}).sort({borrowedDate: -1});
   return borrowedBooks;
 };
 //
-//find by userid
+//find by borrowed book userid
 exports.findBorrowedBookByUserId = async (borrowerId) => {
   const borrowedBooks = await BorrowedBook.find({borrowerId}).sort({borrowedDate: -1});
   return borrowedBooks;
@@ -150,8 +150,3 @@ exports.findAllFilteredBorrowedBook = async ({status, search, id}) => {
 
   return books;
 };
-
-// // update bookmark
-// exports.updateBookmark = async (id, updatedInfo) => {
-//   return await Bookmark.updateOne({id}, updatedInfo, {runValidators: true});
-// };

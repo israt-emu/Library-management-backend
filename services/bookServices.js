@@ -38,6 +38,7 @@ exports.findSingleBookServices = async (id, edit) => {
   }
   return book;
 };
+//find single book by mongoose id
 exports.findSingleBookServicesById = async (id) => {
   const book = await Book.findOne({_id: id});
   return book;
@@ -45,7 +46,6 @@ exports.findSingleBookServicesById = async (id) => {
 // update book
 exports.editBookServices = async (id, updatedInfo) => {
   const existingBook = await Book.findOne({_id: id});
-  // console.log(existingRequested, updatedInfo);
   if (existingBook) {
     const result = await Book.updateOne({_id: id}, updatedInfo, {
       runValidators: true,
@@ -74,7 +74,6 @@ exports.getAllBooksServices = async () => {
 //updating stock after borrow a book
 exports.updateBookStockServices = async ({book, state}) => {
   const stock = book?.totalStock;
-  // console.log(stock);
   if (stock > 0 && state === "borrow") {
     book.totalStock = stock - 1;
     book.totalBorrowed = book?.totalBorrowed + 1;
@@ -174,7 +173,3 @@ exports.findBooksBySearch = async (search) => {
   }).sort({createdAt: -1});
   return books;
 };
-// // update bookmark
-// exports.updateBookmark = async (id, updatedInfo) => {
-//   return await Bookmark.updateOne({id}, updatedInfo, {runValidators: true});
-// };
