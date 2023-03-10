@@ -24,16 +24,18 @@ exports.findTopBooks = async () => {
 };
 
 // // find single book
-exports.findSingleBookServices = async (id) => {
+exports.findSingleBookServices = async (id, edit) => {
   const book = await Book.findOne({bookId: id});
   console.log(book);
-  book.views++; // assuming you have a "views" field in your article schema
+  if (!edit) {
+    book.views = book?.views + 1; // assuming you have a "views" field in your article schema
 
-  book.save((err, updatedArticle) => {
-    if (err) {
-      return res.status(500).send(err);
-    }
-  });
+    book.save((err, updatedArticle) => {
+      if (err) {
+        return res.status(500).send(err);
+      }
+    });
+  }
   return book;
 };
 exports.findSingleBookServicesById = async (id) => {
@@ -76,7 +78,6 @@ exports.updateBookStockServices = async ({book, state}) => {
   if (stock > 0 && state === "borrow") {
     book.totalStock = stock - 1;
     book.totalBorrowed = book?.totalBorrowed + 1;
-
     if (stock - 1 === 0) {
       book.status = "Stock Out";
     }

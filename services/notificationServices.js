@@ -37,8 +37,12 @@ exports.deleteNotificationServices = async (id) => {
   }
 };
 
-// // get all book
+// // get all notification
 exports.getAllNotificationServices = async () => {
   const notification = await Notification.find({}).sort({createdAt: -1});
+  return notification;
+};
+exports.getNotificationByUserIdServices = async (id) => {
+  const notification = await Notification.find({user: id}).sort({createdAt: -1});
   return notification;
 };

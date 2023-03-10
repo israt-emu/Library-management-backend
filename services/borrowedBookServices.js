@@ -25,20 +25,20 @@ exports.returnBorrowedBook = async (borrowedBook) => {
 
 // // get all book
 exports.findAllBorrowedBook = async () => {
-  const borrowedBooks = await BorrowedBook.find({}).sort({createdAt: -1});
+  const borrowedBooks = await BorrowedBook.find({}).sort({borrowedDate: -1});
   return borrowedBooks;
 };
 //
 //find by userid
 exports.findBorrowedBookByUserId = async (borrowerId) => {
-  const borrowedBooks = await BorrowedBook.find({borrowerId}).sort({createdAt: -1});
+  const borrowedBooks = await BorrowedBook.find({borrowerId}).sort({borrowedDate: -1});
   return borrowedBooks;
 };
 // get all filtered borrowed books
 exports.findAllFilteredBorrowedBook = async ({status, search, id}) => {
   let books;
   if (status !== "" && search === "" && id === "") {
-    books = await BorrowedBook.find({status}).sort({createdAt: -1});
+    books = await BorrowedBook.find({status}).sort({borrowedDate: -1});
   } //
   else if (status === "" && search !== "" && id === "") {
     books = await BorrowedBook.find({
@@ -63,7 +63,7 @@ exports.findAllFilteredBorrowedBook = async ({status, search, id}) => {
           },
         },
       ],
-    }).sort({createdAt: -1});
+    }).sort({borrowedDate: -1});
   } else if (status !== "" && search !== "" && id === "") {
     books = await BorrowedBook.find({
       status,
@@ -88,7 +88,7 @@ exports.findAllFilteredBorrowedBook = async ({status, search, id}) => {
           },
         },
       ],
-    }).sort({createdAt: -1});
+    }).sort({borrowedDate: -1});
   } //
   else if (status === "" && search !== "" && id !== "") {
     books = await BorrowedBook.find({
@@ -114,7 +114,7 @@ exports.findAllFilteredBorrowedBook = async ({status, search, id}) => {
           },
         },
       ],
-    }).sort({createdAt: -1});
+    }).sort({borrowedDate: -1});
   } else if (status !== "" && search === "" && id !== "") {
     books = await BorrowedBook.find({
       borrowerId: id,
@@ -145,7 +145,7 @@ exports.findAllFilteredBorrowedBook = async ({status, search, id}) => {
           },
         },
       ],
-    }).sort({createdAt: -1});
+    }).sort({borrowedDate: -1});
   }
 
   return books;

@@ -1,4 +1,4 @@
-const {editNoticeServices} = require("../../services/noticeServices");
+const {editNoticeServices, findSingleNoticeServices} = require("../../services/noticeServices");
 
 exports.editNoticeController = async (req, res) => {
   try {
@@ -7,10 +7,11 @@ exports.editNoticeController = async (req, res) => {
     const result = await editNoticeServices(id, data);
     console.log(result);
     if (result?.modifiedCount == 1) {
+      const notice = await findSingleNoticeServices(id);
       return res.status(200).json({
         status: "success",
         message: "Book Successfully updated",
-        notice: result,
+        notice: notice,
       });
     }
     if (result?.modifiedCount !== 1) {
