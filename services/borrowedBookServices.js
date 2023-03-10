@@ -1,21 +1,21 @@
 const BorrowedBook = require("../models/BorrowedBook");
 const mongoose = require("mongoose");
 
-// add new book
+// add new borrowed book
 exports.createBorrowedBook = async (data) => {
   const borrowedBook = await BorrowedBook.create(data);
   await borrowedBook.save();
   return borrowedBook;
 };
 
-// // find single book
+// // find single borrowed book
 exports.findSingleBorrowedBook = async (id) => {
   const borrowedBook = await BorrowedBook.findOne({_id: id});
   // console.log(book);
   return borrowedBook;
 };
 
-// delete book
+// delete borrowed book
 exports.returnBorrowedBook = async (borrowedBook) => {
   borrowedBook.status = "returned";
   borrowedBook.returnDate = new Date();
@@ -23,22 +23,22 @@ exports.returnBorrowedBook = async (borrowedBook) => {
   return borrowedBook;
 };
 
-// // get all book
+// // get all borrowed book
 exports.findAllBorrowedBook = async () => {
-  const borrowedBooks = await BorrowedBook.find({}).sort({createdAt: -1});
+  const borrowedBooks = await BorrowedBook.find({}).sort({borrowedDate: -1});
   return borrowedBooks;
 };
 //
-//find by userid
+//find by borrowed book userid
 exports.findBorrowedBookByUserId = async (borrowerId) => {
-  const borrowedBooks = await BorrowedBook.find({borrowerId}).sort({createdAt: -1});
+  const borrowedBooks = await BorrowedBook.find({borrowerId}).sort({borrowedDate: -1});
   return borrowedBooks;
 };
 // get all filtered borrowed books
 exports.findAllFilteredBorrowedBook = async ({status, search, id}) => {
   let books;
   if (status !== "" && search === "" && id === "") {
-    books = await BorrowedBook.find({status}).sort({createdAt: -1});
+    books = await BorrowedBook.find({status}).sort({borrowedDate: -1});
   } //
   else if (status === "" && search !== "" && id === "") {
     books = await BorrowedBook.find({
@@ -63,7 +63,7 @@ exports.findAllFilteredBorrowedBook = async ({status, search, id}) => {
           },
         },
       ],
-    }).sort({createdAt: -1});
+    }).sort({borrowedDate: -1});
   } else if (status !== "" && search !== "" && id === "") {
     books = await BorrowedBook.find({
       status,
@@ -88,7 +88,7 @@ exports.findAllFilteredBorrowedBook = async ({status, search, id}) => {
           },
         },
       ],
-    }).sort({createdAt: -1});
+    }).sort({borrowedDate: -1});
   } //
   else if (status === "" && search !== "" && id !== "") {
     books = await BorrowedBook.find({
@@ -114,7 +114,7 @@ exports.findAllFilteredBorrowedBook = async ({status, search, id}) => {
           },
         },
       ],
-    }).sort({createdAt: -1});
+    }).sort({borrowedDate: -1});
   } else if (status !== "" && search === "" && id !== "") {
     books = await BorrowedBook.find({
       borrowerId: id,
@@ -145,13 +145,8 @@ exports.findAllFilteredBorrowedBook = async ({status, search, id}) => {
           },
         },
       ],
-    }).sort({createdAt: -1});
+    }).sort({borrowedDate: -1});
   }
 
   return books;
 };
-
-// // update bookmark
-// exports.updateBookmark = async (id, updatedInfo) => {
-//   return await Bookmark.updateOne({id}, updatedInfo, {runValidators: true});
-// };

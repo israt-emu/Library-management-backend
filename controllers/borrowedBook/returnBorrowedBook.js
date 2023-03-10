@@ -4,7 +4,7 @@ const {returnBorrowedBook, findSingleBorrowedBook} = require("../../services/bor
 exports.returnBorrowedBookController = async (req, res) => {
   try {
     const {id: strId, bookId} = req?.body;
-    const book = await findSingleBookServices(bookId);
+    const book = await findSingleBookServices(bookId, true);
     const borrwedBook = await findSingleBorrowedBook(strId);
     const returnedBook = await returnBorrowedBook(borrwedBook);
     if (returnedBook?.status === "returned") {

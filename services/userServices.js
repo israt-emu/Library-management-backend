@@ -225,7 +225,7 @@ exports.findAllFilteredUser = async ({role, status, search}) => {
 
   return users;
 };
-//
+//make  user admin or remove admin
 exports.makeOrDeleteAdmin = async (user) => {
   if (user?.admin) {
     user.admin = false;
@@ -235,7 +235,7 @@ exports.makeOrDeleteAdmin = async (user) => {
   await user.save({validateBeforeSave: true});
   return user;
 };
-//
+//user status update
 exports.statusUpdateService = async (user) => {
   if (user?.status === "active") {
     user.status = "block";
@@ -255,6 +255,5 @@ exports.updateUser = async (email, updatedInfo) => {
     runValidators: true,
   });
 
-  // const user = await User.updateOne({email}, updatedInfo, {runValidators: true});
   return result;
 };
