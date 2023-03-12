@@ -14,6 +14,10 @@ const io = new Server(server, {
 });
 io.on("connection", (socket) => {
   console.log("a user connected");
+  socket.on("addNotification", (data) => {
+    console.log("from socket", data);
+    io.emit("getNotification", data);
+  });
 });
 
 // database connection
