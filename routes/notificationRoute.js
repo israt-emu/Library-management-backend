@@ -5,7 +5,7 @@ const {
 const {
   changeStatusNotificationController,
 } = require("../controllers/notification/changeStatusNotificationController");
-const { deleteNotificationController } = require("../controllers/Notification/deleteNotificationController");
+const { deleteNotificationController } = require("../controllers/notification/deleteNotificationController");
 
 const {
   getAllNotificationController,
