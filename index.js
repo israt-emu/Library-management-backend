@@ -23,11 +23,6 @@ io.on("connection", (socket) => {
 // database connection
 db();
 
-// create server
-// app.listen(PORT, () => {
-//   console.log(`---Server is Listening On PORT ::: ${PORT}`);
-// });
-
-server.listen(8000, () => {
-  console.log("listening on *:8000");
+server.listen(PORT, () => {
+  console.log(`listening on *:${PORT}`);
 });
